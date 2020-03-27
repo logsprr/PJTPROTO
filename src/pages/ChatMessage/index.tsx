@@ -48,27 +48,6 @@ class ChatScreen extends React.Component {
             })
     }
 
-    // componentWillUnmount() {
-    //     var usersRef = firebase.database().ref('users/');
-    //     var hopperRef = usersRef.child('064992816487');
-    //     hopperRef.update({
-    //         "status": "offline"
-    //     });
-    //     const _id = this.state.person.id * -1;
-    //     console.log(_id);
-    //     firebase.database().ref('users/' + '064992816487' + '/friends/' + _id + '/badge').once('value', snapshot => {
-    //         if (snapshot.val() == null) {
-    //             console.log(snapshot.val())
-    //         }
-    //         else {
-    //             const val = 0;
-    //             firebase.database().ref('users/' + '064992816487' + '/friends/' + _id).update({
-    //                 badge: val
-    //             })
-    //             console.log(val);
-    //         }
-    //     })
-    // }
     convertTime = (time) => {
         let d = new Date(time);
 

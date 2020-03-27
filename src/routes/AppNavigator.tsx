@@ -11,7 +11,11 @@ function AppNavigator() {
         <NavigationContainer>
             <Stack.Navigator initialRouteName='Login'>
                 <Stack.Screen name="Auth" component={AuthNavigator} />
-                <Stack.Screen name="Login" component={LoginNavigator} />
+                <Stack.Screen name="Login" component={LoginNavigator}
+                    options={{
+                        headerShown: false
+                    }}
+                />
                 <Stack.Screen name="Message" component={TabNavigator}
                     options={{
                         headerShown: false
