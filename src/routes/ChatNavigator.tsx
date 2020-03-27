@@ -3,8 +3,8 @@ import { Button, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
-import ChatScreen from '../pages/Chat';
-import ChatCall from '../pages/Call';
+import ChatScreen from '../pages/Messages';
+import ChatCall from '../pages/ChatMessage';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 const Stack = createStackNavigator();
 function ChatNavigator({ navigation }) {

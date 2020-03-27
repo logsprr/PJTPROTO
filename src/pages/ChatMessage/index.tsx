@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, Text, TextInput, Image, KeyboardAvoidingView, Platform, Dimensions, TouchableOpacity, FlatList, SafeAreaView } from 'react-native';
-import styles from '../themes/constants/styles';
+import styles from '../../themes/constants/styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon2 from 'react-native-vector-icons/AntDesign';
 import Icon3 from 'react-native-vector-icons/FontAwesome';
 import firebase from 'firebase';
 import { Ionicons } from '@expo/vector-icons';
-
+import moment from 'moment';
 class ChatScreen extends React.Component {
     constructor(props) {
         super(props);
@@ -24,6 +24,7 @@ class ChatScreen extends React.Component {
             type: '',
             random: '',
             arr: [],
+            arrayBadge: [],
         }
     }
     componentDidMount() {
@@ -87,7 +88,6 @@ class ChatScreen extends React.Component {
     sendMessage = async () => {
         const type = this.state.type;
         if (this.state.textMessage.length > 0) {
-
             let msgId = firebase.database().ref('messages').child('064992816487').child(this.state.person.phone).push().key;
             let updates = {};
             let message = {
@@ -102,22 +102,29 @@ class ChatScreen extends React.Component {
             updates['messages/' + '064992816487' + '/' + this.state.person.phone + '/' + msgId] = message;
             firebase.database().ref().update(updates);
             this.setState({ textMessage: '' });
-            firebase.database().ref('users/' + this.state.person.phone + '/friends/' + id + '/badge').once('value', snapshot => {
-                if (snapshot.val() == null) {
-                    const val = 1;
-
-                    firebase.database().ref('users/' + this.state.person.phone + '/friends/' + id).update({
-                        badge: val
+            firebase.database().ref('users/' + this.state.person.phone + '/friends').on('child_added', async (val) => {
+                console.log("aqui")
+                this.setState((prevState) => {
+                    return {
+                        new: [...prevState.arrayBadge, val.val()]
+                    }
+                })
+                setTimeout(() => {
+                    console.log(this.state.arrayBadge)
+                    let put = this.state.arrayBadge.map((item) => {
+                        console.log(item.id);
+                        if (item.phone == this.state.person.phone) {
+                            console.log('aqui aqui')
+                            firebase.database().ref('users/' + '064992816487/' + 'friends/' + item.id).update({
+                                time: firebase.database.ServerValue.TIMESTAMP,
+                                badge: 19
+                            })
+                        } else {
+                            console.log('deu erro');
+                        }
                     })
-
-                }
-                else {
-                    const val = snapshot.val() + 1;
-                    firebase.database().ref('users/' + this.state.person.phone + '/friends/' + id).update({
-                        badge: val
-                    })
-                }
-            })
+                }, 1000)
+            });
 
         }
     }
@@ -179,7 +186,7 @@ class ChatScreen extends React.Component {
                         paddingRight: -20,
                         fontSize: 12,
                     }}>
-                        {this.convertTime(item.time)}
+                        {moment(item.time).format('HH:MM')}
                     </Text>
                 </Text> : <View style={{
                     width: 320,

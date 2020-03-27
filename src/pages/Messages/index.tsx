@@ -5,9 +5,9 @@ import { SearchBar, ListItem } from 'react-native-elements';
 import { Dispatch } from 'redux';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as UsersActions from "../store/modules/Users/UserActions";
+import * as UsersActions from "../../store/modules/Users/UserActions";
 import firebase from 'firebase';
-import Story from '../components/Story';
+import Story from '../../components/Story';
 class Chat extends Component {
 
     state = {

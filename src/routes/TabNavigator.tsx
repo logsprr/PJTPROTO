@@ -6,7 +6,7 @@ import {
     withCustomStyle,
 } from 'react-navigation-custom-bottom-tab-component/FlexibleTabBarComponent';
 import ChatNavigator from '../routes/ChatNavigator';
-import ChatScreen from '../pages/Chat';
+import ChatScreen from '../pages/Messages';
 import TabBar from '../components/TabBar'
 
 const Tab = createBottomTabNavigator();
