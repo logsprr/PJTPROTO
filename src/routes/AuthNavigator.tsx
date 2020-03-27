@@ -9,7 +9,6 @@ import firebase from 'firebase';
 class AuthNavigator extends React.Component {
     constructor(props) {
         super(props);
-        this._bootstrapAsync();
     }
     componentDidMount() {
         const config = {
@@ -23,10 +22,6 @@ class AuthNavigator extends React.Component {
         };
         firebase.initializeApp(config);
     }
-    _bootstrapAsync = async () => {
-        const { navigation } = this.props;
-        navigation.navigate('Message');
-    };
     render() {
         return (
             <View>
