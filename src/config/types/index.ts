@@ -6,7 +6,11 @@ export enum ListTypesRequest {
     LOAD_REQUESTCREATE = "@user/Create",
     LOAD_REQUESTDELETE = "@user/Delete",
     LOAD_SUCCESS = "@user/success",
-    LOAD_FAILURE = "@user/failure"
+    LOAD_FAILURE = "@user/failure",
+    //login
+    LOAD_LOGIN = "@login/user/get",
+    LOAD_SUCCESS_LOGIN = "@login/success",
+    LOAD_FAILURE_LOGIN = "@login/failure",
 }
 
 export interface User {

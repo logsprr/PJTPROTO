@@ -1,16 +1,28 @@
 import React, { Component, useState } from 'react';
-import { Ionicons } from '@expo/vector-icons'
+import { Dispatch } from 'redux';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import * as LoginActions from "../../store/modules/Login/LoginActions";
 import { View, SafeAreaView, Text, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 import TouchableScale from 'react-native-touchable-scale';
 import styles from './style';
-export default class Login extends Component {
+class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
             login: '',
+            email: '',
+            password: '',
         }
     }
+    login = () => {
+        const { email, password } = this.state;
+        const { loadRequestLogin } = this.props;
+        loadRequestLogin(email, password);
+
+    }
     render() {
+        const { email, password } = this.state;
         return (
             <SafeAreaView style={styles.container}>
                 <KeyboardAvoidingView enabled={Platform.OS == 'ios'} behavior='position' keyboardVerticalOffset={100} >
@@ -20,9 +32,9 @@ export default class Login extends Component {
                     </View>
                     <View style={styles.form}>
                         <Text style={styles.formLabel}>E-mail</Text>
-                        <TextInput style={styles.formInput} placeholder="Digite o seu email" />
+                        <TextInput style={styles.formInput} autoCapitalize='none' keyboardType='email-address' placeholder="Digite o seu email" value={email} onChangeText={(email) => this.setState({ email: email })} />
                         <Text style={[styles.formLabel, { marginTop: 40 }]}>Senha</Text>
-                        <TextInput secureTextEntry={true} style={styles.formInput} placeholder="Digite a sua senha" />
+                        <TextInput style={styles.formInput} keyboardType='default' secureTextEntry={true} placeholder="Digite a sua senha" value={password} onChangeText={(password) => this.setState({ password: password })} />
                     </View>
                     <View style={styles.containerButtons}>
                         <TouchableScale
@@ -39,7 +51,7 @@ export default class Login extends Component {
                             tension={100} //
                             activeScale={0.95}
                             style={styles.buttonLogin}
-                            onPress={() => { }}
+                            onPress={() => this.login()}
                         >
                             <Text style={styles.buttonLoginText}>Logar</Text>
                         </TouchableScale>
@@ -49,3 +61,11 @@ export default class Login extends Component {
         );
     }
 }
+
+const mapStateToProps = state => ({
+    login: state.login
+});
+const mapDispatchToProps = (dispatch: Dispatch) =>
+    bindActionCreators({ ...LoginActions }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

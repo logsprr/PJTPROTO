@@ -1,17 +1,15 @@
 import * as React from 'react';
-import { StatusBar } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import TabNavigator from './TabNavigator';
-import AuthNavigator from './AuthNavigator';
 import LoginNavigator from './LoginNavigator';
-import { Ionicons } from '@expo/vector-icons';
 const Stack = createStackNavigator();
-function AppNavigator() {
+export default function AppNavigator({ isSigned }) {
+    console.log(isSigned);
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName='Home' screenOptions={{cardStyle: {backgroundColor: '#FFF'}}}>
-                <Stack.Screen name="Auth" component={AuthNavigator} />
+            <Stack.Navigator initialRouteName={isSigned == false ? 'Message' : 'Home'}
+                screenOptions={{ cardStyle: { backgroundColor: '#FFF' } }}>
                 <Stack.Screen name="Home" component={LoginNavigator}
                     options={{
                         headerShown: false
@@ -26,4 +24,3 @@ function AppNavigator() {
         </NavigationContainer>
     );
 }
-export default AppNavigator;
