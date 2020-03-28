@@ -11,13 +11,15 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        marginTop: 18,
+        marginTop: 8,
         fontSize: 28,
+        marginLeft: 10,
         fontWeight: 'bold'
     },
     description: {
         color: '#95a5a6',
         marginTop: 10,
+        marginLeft: 10,
     },
     form: {
         flexDirection: 'column',
@@ -34,7 +36,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         borderBottomColor: '#95a5a6'
     },
-    
+
     containerButtons: {
         marginTop: 50,
         justifyContent: 'center',
@@ -68,7 +70,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     }
 
-    
+
 })
 
 export default styles;
