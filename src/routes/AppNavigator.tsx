@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { StatusBar } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import TabNavigator from './TabNavigator';
@@ -9,9 +10,9 @@ const Stack = createStackNavigator();
 function AppNavigator() {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName='Login'>
+            <Stack.Navigator initialRouteName='Home' screenOptions={{cardStyle: {backgroundColor: '#FFF'}}}>
                 <Stack.Screen name="Auth" component={AuthNavigator} />
-                <Stack.Screen name="Login" component={LoginNavigator}
+                <Stack.Screen name="Home" component={LoginNavigator}
                     options={{
                         headerShown: false
                     }}
