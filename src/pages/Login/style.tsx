@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     },
 
     containerButtons: {
-        marginTop: 50,
+        //marginTop: 50,
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -51,13 +51,14 @@ const styles = StyleSheet.create({
     },
 
     forgetPassText: {
+        marginTop: 50,
         fontWeight: 'bold',
         fontSize: 16
     },
 
     buttonLogin: {
         marginTop: 60,
-        width: '50%',
+        paddingHorizontal: '15%',
         height: 40,
         alignItems: 'center',
         justifyContent: 'center',
