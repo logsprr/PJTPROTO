@@ -3,7 +3,7 @@ import { Dispatch } from 'redux';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as LoginActions from "../../store/modules/Login/LoginActions";
-import { View, SafeAreaView, Text, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, SafeAreaView, Text, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, Alert, ActivityIndicator } from 'react-native';
 import TouchableScale from 'react-native-touchable-scale';
 import styles from './style';
 class Login extends Component {
@@ -11,18 +11,33 @@ class Login extends Component {
         super(props);
         this.state = {
             login: '',
-            email: '',
-            password: '',
+            email: null,
+            password: null,
         }
     }
     login = () => {
         const { email, password } = this.state;
         const { loadRequestLogin } = this.props;
-        loadRequestLogin(email, password);
-
+        if (email != null) {
+            if (password != null) {
+                loadRequestLogin(email, password);
+            } else {
+                Alert.alert('Preencha o campo senha!')
+            }
+        } else {
+            Alert.alert('Preencha o campo email!')
+        }
     }
     render() {
         const { email, password } = this.state;
+        const { login } = this.props;
+        if (login.isRead) {
+            return (
+                <View style={styles.indicator}>
+                    <ActivityIndicator size='large' animating style={{ backgroundColor: "white", width: 200, height: 200, borderRadius: 20 }} />
+                </View>
+            )
+        }
         return (
             <SafeAreaView style={styles.container}>
                 <KeyboardAvoidingView enabled={Platform.OS == 'ios'} behavior='position' keyboardVerticalOffset={100} >

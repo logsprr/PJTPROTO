@@ -3,12 +3,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import TabNavigator from './TabNavigator';
 import LoginNavigator from './LoginNavigator';
+import { navigationRef } from './RootNavigation';
 const Stack = createStackNavigator();
-export default function AppNavigator({ isSigned }) {
-    console.log(isSigned);
+export default function AppNavigator() {
     return (
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName={isSigned == false ? 'Message' : 'Home'}
+        <NavigationContainer ref={navigationRef}>
+            <Stack.Navigator initialRouteName='Auth'
                 screenOptions={{ cardStyle: { backgroundColor: '#FFF' } }}>
                 <Stack.Screen name="Home" component={LoginNavigator}
                     options={{
