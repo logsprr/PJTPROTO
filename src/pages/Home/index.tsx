@@ -20,6 +20,7 @@ export default class Home extends Component {
                         tension={100} //
                         activeScale={0.95}
                         style={styles.buttonCreate}
+                        onPress={() => this.props.navigation.navigate('CreateAccount')}
                         >
                         <Text style={styles.buttonCreateText}>Criar conta</Text>
                     </TouchableScale>

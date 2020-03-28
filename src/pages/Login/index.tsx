@@ -42,7 +42,7 @@ class Login extends Component {
                             tension={100} //
                             activeScale={0.95}
                             style={styles.buttonForgetPass}
-                            onPress={() => { }}
+                            onPress={() => this.props.navigation.navigate('ForgetPassword')}
                         >
                             <Text style={styles.forgetPassText}>Esqueceu ?</Text>
                         </TouchableScale>
