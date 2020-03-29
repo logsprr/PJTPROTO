@@ -2,10 +2,8 @@ import React, { Component, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons'
 import { View, SafeAreaView, Text, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 import TouchableScale from 'react-native-touchable-scale';
-
 import styles from './styles';
-import resetSuccessImage from '../../../assets/ResetSuccess/ResetSuccessImage.png'
-
+import resetSuccessImage from '../../../assets/images/ResetSuccessImage.png'
 export default class ResetPassword extends Component {
 
     render() {
