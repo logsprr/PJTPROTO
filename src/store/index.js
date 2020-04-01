@@ -26,11 +26,11 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 middlewares.push(offlineMiddleware({
     additionalTriggers: REHYDRATE,
 }));
+//
+
 middlewares.push(suspendSaga(sagaMiddleware));
 middlewares.push(consumeActionMiddleware());
 //
-
-
 const enhancer = __DEV__
     ? compose(console.tron.createEnhancer(), applyMiddleware(sagaMiddleware))
     : applyMiddleware(sagaMiddleware);
@@ -38,10 +38,7 @@ const enhancer = __DEV__
 const store = createStore(
     persistedReducer,
     enhancer,
-
-
 );
-
 
 //
 reactotron.setReduxStore(store)

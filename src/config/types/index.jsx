@@ -26,5 +26,19 @@ export const ListTypesRequest = {
     //createUser
     LOAD_REQUEST_CREATE_USER: "@create/user",
     LOAD_REQUEST_CREATE_SUCCESS: "@create/user/success",
-    LOAD_REQUEST_CREATE_FAILURE: "@create/user/failure"
+    LOAD_REQUEST_CREATE_FAILURE: "@create/user/failure",
+
+    //Load Chat
+    LOAD_REQUEST_CHAT: "@user/load/chat",
+    LOAD_REQUEST_CHAT_SUCCESS: "@user/load/chat/failure",
+    LOAD_REQUEST_CHAT_FAILURE: "@user/load/chat/failure",
+    LOAD_REQUEST_CHAT_UPDATE: "@user/load/chat/failure",
+
+    //load list chat
+
+    LOAD_REQUEST_LIST_CHAT: "@user/load/listchat",
+    LOAD_REQUEST_CHAT_LIST_SUCCESS: "@user/load/listchat/failure",
+    LOAD_REQUEST_CHAT_LIST_FAILURE: "@user/load/listchat/failure",
+    LOAD_REQUEST_CHAT_LIST_UPDATE: "@user/load/listchat/failure",
+
 }

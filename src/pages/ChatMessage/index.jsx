@@ -1,67 +1,93 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, FlatList, Alert, ScrollView } from 'react-native';
+import { Text, View, TouchableOpacity, FlatList, Alert, ScrollView, Image, BackHandler } from 'react-native';
 import TouchableScale from 'react-native-touchable-scale';
 import { SearchBar, ListItem } from 'react-native-elements';
 import { Dispatch } from 'redux';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as LoginActions from "../../store/modules/Login/LoginActions";
+import * as ListChatActions from "../../store/modules/ListChat/ListChatAction";
 import firebase from 'firebase';
+import sentCheck from '../../assets/icons/png/sent.png';
+import deliverredCheck from '../../assets/icons/png/delivered.png';
+import viewedCheck from '../../assets/icons/png/viewed.png';
 import Story from '../../components/Story';
+import { showMessage, hideMessage } from "react-native-flash-message";
+import FlashMessage from "react-native-flash-message";
+import { Appbar } from 'react-native-paper';
 class Chat extends Component {
 
-    state = {
-        users: [],
-        arrayholder: [],
-        new: [],
-        id: null,
-        usersLogin: false
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            users: [],
+            arrayholder: [],
+            new: [],
+            id: null,
+            usersLogin: false
+        }
     }
+
     componentDidMount() {
+
         this.getContact();
     }
+
     getContact = async () => {
-        const { login } = this.props;
-        let dbRef = firebase.database().ref('enterprises/' + login.result.idEnterprise + '/users/' + login.result._id + '/friends');
+        const { login, loadRequestChat } = this.props;
+        let dbRef = firebase.database()
+            .ref('enterprises/' + login.result.idEnterprise +
+                '/users/' + login.result._id + '/friends')
+            .limitToFirst(5)
+            .orderByChild('time');
         dbRef.on('child_added', async (val) => {
-            if (val.val() != null) {
-                this.setState({ usersLogin: false })
-                this.addContact(val);
-            } else {
-                this.setState({ usersLogin: true })
-                dbRef.off('child_added');
-                dbRef.off('child_changed');
-            }
+            this.setState({ usersLogin: false })
+            this.addContact(val);
         })
+
         dbRef.on('child_changed', (val) => {
             let data = this.state.users.map((item) => {
                 if (val.val().id == item.id) {
+                    console.log(val.val().from);
+                    if (val.val().from != login.result.phone) {
+                        console.log("opa opa")
+                        firebase.database().ref('enterprises/' + login.result.idEnterprise + '/messages/' + val.val().phone + '/' + login.result.phone + '/' + val.val().lastmessageId).update({
+                            delivered: 'delivered'
+                        });
+                        firebase.database().ref('enterprises/' + login.result.idEnterprise + '/messages/' + login.result.phone + '/' + val.val().phone + '/' + val.val().lastmessageId).update({
+                            delivered: 'delivered'
+                        });
+                    }
                     return {
                         'name': val.val().name,
                         'avatar': val.val().avatar,
                         'lastmessage': val.val().lastmessage,
+                        'lastmessageId': val.val().lastmessageId,
                         'badge': val.val().badge,
                         'id': val.val().id,
-                        'time': val.val().time
+                        'time': val.val().time,
+                        'phone': val.val().phone,
+                        'delivered': 'delivered'
                     }
                 } else {
                     return {
                         'name': item.name,
                         'avatar': item.avatar,
                         'lastmessage': item.lastmessage,
+                        'lastmessageId': item.lastmessageId,
                         'badge': item.badge,
                         'id': item.id,
-                        'time': item.time
+                        'time': item.time,
+                        'phone': item.phone,
+                        'delivered': item.delivered
                     }
                 }
             })
-            // data.splice(0, 0, val.val());
             this.setState({
                 users: data
             })
-            // /this.updateContact(val);
         })
-
     }
     addPit = async (item) => {
         // let data = firebase.database().ref('users/' + '064992816487' + '/friends').on('child_added', async (val) => {
@@ -92,6 +118,7 @@ class Chat extends Component {
         // });
     }
     addContact = async (val) => {
+        const { loadRequestListChat } = this.props;
         let person = val.val();
 
         this.setState((prevState) => {
@@ -104,21 +131,28 @@ class Chat extends Component {
             loading: false,
         })
         this.arrayholder = this.state.users;
-        console.log(val.val())
-
+        loadRequestListChat(this.state.users);
     }
     updateContact = async (val) => {
         let person = val.val();
         let index = 0;
-        console.log(person + `${index = index + 1}`)
     }
     render() {
-        const { login } = this.props;
+        const { login, navigation } = this.props;
         return (
             <View style={{ flex: 1, backgroundColor: 'white' }} >
+                <Appbar.Header style={{ backgroundColor: 'white' }} >
+                    <Appbar.Action icon="menu" onPress={() =>
+                        navigation.openDrawer()
+                    } />
+                    <Appbar.Content
+                        title="Mensagens"
+                    />
+                    <Appbar.Action icon="account-plus" onPress={() => navigation.navigate('Contacts')} />
+                </Appbar.Header>
                 <FlatList
                     keyboardShouldPersistTaps="handled"
-                    data={this.state.users.sort((a, b) => b.time - a.time)}
+                    data={this.props.listChat.result.sort((a, b) => b.time - a.time)}
                     ListEmptyComponent={() => (
                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 150 }}>
                             <Text style={{ textAlign: "center" }} >{login.result.name + ' você ainda não \npossui nenhuma conversa'}</Text>
@@ -127,11 +161,6 @@ class Chat extends Component {
                     ListHeaderComponent={<Story />}
                     renderItem={({ item, index }) => (
                         <ListItem
-                            rightTitle='online'
-                            rightTitleStyle={{
-                                marginTop: -20,
-                                marginRight: -35
-                            }}
                             bottomDivider
                             onPress={() => this.props.navigation.navigate('Chat', item)}
                             Component={TouchableScale}
@@ -141,10 +170,28 @@ class Chat extends Component {
 
                             leftAvatar={{ source: { uri: item.avatar, cache: 'default' }, size: 'medium' }}
                             title={`${item.name}`}
-                            subtitle={item.lastmessage}
+                            subtitle={
+                                <View style={{
+                                    flexDirection: 'row',
+                                    alignItems: "center"
+
+                                }}>
+                                    <Text style={{ marginRight: 8 }}
+                                    >{item.lastmessage}</Text>
+                                    {item.delivered == 'sent' && <Image source={sentCheck} style={{
+                                        width: 14, height: 14
+                                    }} />}
+                                    {item.delivered == 'delivered' && <Image source={deliverredCheck} style={{
+                                        width: 14, height: 14
+                                    }} />}
+                                    {item.delivered == 'viewed' && <Image source={viewedCheck} style={{
+                                        width: 14, height: 14
+                                    }} />}
+
+                                </View>
+                            }
                             badge={{ value: item.badge, textStyle: { color: 'white' }, badgeStyle: { marginTop: 20, marginRight: 10, width: 20, height: 20, backgroundColor: item.badge == null || item.badge == 0 ? 'white' : '#7f8c8d' } }}
                         />
-
                     )}
                     keyExtractor={item => item.id}
                     ListFooterComponent={() => (
@@ -157,6 +204,14 @@ class Chat extends Component {
                     alignItems: 'center',
                 }}>
                     <TouchableScale
+                        onPress={() => {
+                            /* HERE WE GONE SHOW OUR FIRST MESSAGE */
+                            showMessage({
+                                message: "Simple message",
+                                type: "info",
+                                duration: 9000
+                            });
+                        }}
                         friction={90} //
                         tension={100} //
                         activeScale={0.95}
@@ -178,10 +233,11 @@ class Chat extends Component {
 }
 
 const mapStateToProps = state => ({
-    login: state.login
+    login: state.login,
+    listChat: state.listChat
 });
 
 const mapDispatchToProps = (dispatch) =>
-    bindActionCreators({ ...LoginActions }, dispatch);
+    bindActionCreators({ ...LoginActions, ...ListChatActions }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

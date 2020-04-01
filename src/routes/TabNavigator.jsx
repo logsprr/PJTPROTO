@@ -16,9 +16,9 @@ const TabNavigator = () => {
         >
             <Tab.Screen name="Mensagens" component={ChatNavigator} />
             <Tab.Screen name="Atividades" component={TaskNavigator} />
-            <Tab.Screen name="Perfil" component={ProfileNavigator} />
+            <Tab.Screen name="Agenda" component={ProfileNavigator} />
             <Tab.Screen name="Notificações" component={NotificationNavigation} />
-            <Tab.Screen name="Config.." component={SettingsNavigator} />
+            <Tab.Screen name="Relatórios" component={SettingsNavigator} />
         </Tab.Navigator>
     );
 }

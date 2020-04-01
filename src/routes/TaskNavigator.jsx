@@ -10,9 +10,10 @@ function TaskNavigator({ navigation }) {
                     elevation: 0,
                     shadowOpacity: 0,
                 },
-                headerTitleAlign: 'center'
+                headerTitleAlign: 'center',
+                headerShown: false
             }}>
-            <Stack.Screen name="HomeTask" component={TaskScreen} />
+            <Stack.Screen name="Atividades" component={TaskScreen} />
         </Stack.Navigator >
 
     );

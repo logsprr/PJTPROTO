@@ -3,7 +3,8 @@ const INITIAL_STATE = {
     loading: false,
     isLogged: false,
     isRead: false,
-    error: false
+    error: false,
+    result: []
 }
 export default function login(state = INITIAL_STATE, action) {
     switch (action.type) {

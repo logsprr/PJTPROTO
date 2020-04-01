@@ -1,65 +1,43 @@
 import * as React from 'react';
 import { Button, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, TransitionPresets, CardStyleInterpolators } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 import ChatScreen from '../pages/ChatMessage';
 import ChatCall from '../pages/ChatMessage/Messages';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import ChatContacts from '../pages/ChatMessage/ListUsers';
 const Stack = createStackNavigator();
+const config = {
+    animation: 'spring',
+    config: {
+        stiffness: 1000,
+        damping: 500,
+        mass: 3,
+        overshootClamping: false,
+        restDisplacementThreshold: 0.01,
+        restSpeedThreshold: 0.01,
+    },
+};
 function ChatNavigator({ navigation }) {
-    console.log(navigation)
     return (
         <Stack.Navigator
+            headerMode='float'
             screenOptions={{
                 headerStyle: {
                     elevation: 0,
                     shadowOpacity: 0,
                 },
-                headerTitleAlign: 'center'
+                headerShown: false,
+                headerTitleAlign: 'center',
+                ...TransitionPresets.SlideFromRightIOS
             }}>
             <Stack.Screen name="HomeMessage" component={ChatScreen}
-                options={{
-                    title: 'Mensagens',
-                    headerLeft: () => <TouchableOpacity style={{
-                        marginLeft: 20
-                    }}>
-                        <Ionicons name="ios-arrow-back" color='black' size={28} />
-                    </TouchableOpacity>,
-                    headerRight: () => <TouchableOpacity style={{
-                        marginRight: 20
-                    }}>
-                        <Ionicons name="ios-person-add" color='black' size={28} />
-                    </TouchableOpacity>
-                }}
             />
             <Stack.Screen name="Chat" component={ChatCall}
-                options={({ route }) => ({
-                    headerLeft: () =>
-                        <TouchableOpacity
-                            onPress={() => {
-                                navigation.setOptions({
-                                    tabBarVisible: true
-                                })
-                                navigation.navigate('HomeMessage')
-                            }}
-                            style={{
-                                marginLeft: 20
-                            }}>
-                            <Ionicons name="ios-arrow-back" color='black' size={28} />
-                        </TouchableOpacity>,
-                    title: route.params.name,
-                    headerRight: () =>
-                        <TouchableOpacity >
-                            <Image source={{ uri: route.params.avatar }} style={{
-                                width: 38,
-                                height: 38,
-                                borderRadius: 18,
-                                marginRight: 10,
-                            }} />
-                        </TouchableOpacity>,
-                })}
             />
+            <Stack.Screen name="Contacts" component={ChatContacts} />
+            <Stack.Screen name="ChatContactSend" component={ChatCall} />
         </Stack.Navigator >
 
     );

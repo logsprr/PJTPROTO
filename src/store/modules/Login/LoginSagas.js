@@ -30,9 +30,9 @@ export function* loadLogin(action) {
 
 export function* sendCode(action) {
     try {
-        console.log(action.payload)
+
         const response = yield call(api.post, 'user/sendcode', action.payload);
-        console.log(response);
+
         if (response.data.status == true) {
             yield put(loadSuccessCodeSuccess(response.data.email));
             NavigationService('ResetPassword');
@@ -47,9 +47,9 @@ export function* sendCode(action) {
 }
 export function* resetPassWord(action) {
     try {
-        console.log(action.payload)
+
         const response = yield call(api.post, 'user/resetpassword', action.payload);
-        console.log(response);
+
         if (response.data.status == true) {
             yield put(loadSuccessResetPassword());
             NavigationService('ResetSuccess');
@@ -64,9 +64,9 @@ export function* resetPassWord(action) {
 }
 export function* createUser(action) {
     try {
-        console.log(action.payload)
+
         const response = yield call(api.post, 'user/create', action.payload);
-        console.log(response);
+
         if (response.data.status == true) {
             yield put(loadSuccessCreateUser(response.data.data));
             NavigationService('ResetSuccess');

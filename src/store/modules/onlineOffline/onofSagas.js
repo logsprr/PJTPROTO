@@ -1,8 +1,35 @@
-import { call, put, all, takeLatest } from 'redux-saga/effects';
-import api from '../../../services/api';
-import { ListTypesRequest } from '../../../config/types';
+import { put, take } from 'redux-saga/effects';
+import { eventChannel } from 'redux-saga';
+import NetInfo from '@react-native-community/netinfo';
+import { OFFLINE, ONLINE } from 'redux-offline-queue';
 
-export function* Add() { }
+
+export function* startWatchingNetworkConnectivity() {
 
 
-export default all([takeLatest('@requestNetwork', Add)]);
+    // const channel = eventChannel(emitter => {
+
+    //     window.addEventListener('online', emitter)
+
+    //     return () => window.removeEventListener("online", emitter);
+    // });
+
+    // try {
+
+    //     while (true) {
+
+    //         const isConnected = yield take(channel);
+
+    //         if (isConnected)
+    //             yield put({ type: ONLINE });
+    //         else
+    //             yield put({ type: OFFLINE });
+    //     }
+
+    // } finally {
+
+    //     channel.close();
+
+    // }
+
+}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, AntDesign } from '@expo/vector-icons';
 import { View } from 'react-native';
 
 const Icon = ({ name, isFocused, type }) => {
@@ -9,18 +9,22 @@ const Icon = ({ name, isFocused, type }) => {
     } else if (name === 'Atividades') {
         iconName = 'ios-list'
     }
-    else if (name === 'Perfil') {
-        iconName = 'ios-person';
+    else if (name === 'Agenda') {
+        iconName = 'ios-calendar';
     }
     else if (name === 'Notificações') {
         iconName = 'ios-notifications';
     }
-    else if (name === 'Config..') {
-        iconName = 'ios-settings';
+    else if (name === 'Relatórios') {
+        iconName = 'barschart';
     }
     return (
         <View>
-            {type == 'icon' ? <Ionicons name={iconName} size={24} color={isFocused ? 'white' : 'black'} /> : <View />}
+            {type == 'icon' ? <View>
+                {name == 'Relatórios' && <AntDesign name={iconName} size={24} color={isFocused ? 'white' : 'black'} />}
+                {name != 'Relatórios' && <Ionicons name={iconName} size={24} color={isFocused ? 'white' : 'black'} />}
+            </View> :
+                <View />}
         </View>
 
     )

@@ -3,6 +3,7 @@ import { Dispatch } from 'redux';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as LoginActions from "../../store/modules/Login/LoginActions";
+import * as ChatActions from '../../store/modules/Chat/ChatAction';
 import { View, SafeAreaView, Text, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, Alert, ActivityIndicator } from 'react-native';
 import TouchableScale from 'react-native-touchable-scale';
 import styles from './style';
@@ -78,9 +79,10 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => ({
-    login: state.login
+    login: state.login,
+    chat: state.chat
 });
 const mapDispatchToProps = (dispatch) =>
-    bindActionCreators({ ...LoginActions }, dispatch);
+    bindActionCreators({ ...LoginActions, ...ChatActions }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
