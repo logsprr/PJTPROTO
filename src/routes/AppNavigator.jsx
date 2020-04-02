@@ -6,6 +6,7 @@ import LoginNavigator from './LoginNavigator';
 import { navigationRef } from './RootNavigation';
 import AuthNavigator from './AuthNavigator';
 import DrawerNavigation from './DrawerNavigation';
+
 const Stack = createStackNavigator();
 export default function AppNavigator() {
     return (

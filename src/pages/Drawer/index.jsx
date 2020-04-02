@@ -31,6 +31,7 @@ class DrawerContent extends Component {
     render() {
         const { login } = this.props;
         console.log(login);
+        console.log(this.props);
         return (
             <DrawerContentScrollView {...this.props}>
                 <View
@@ -71,7 +72,7 @@ class DrawerContent extends Component {
                                 />
                             )}
                             label="Perfil"
-                            onPress={() => { }}
+                            onPress={() => this.props.navigation.navigate('Profile')}
                         />
                         <DrawerItem
                             icon={({ color, size }) => (
