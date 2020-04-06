@@ -10,7 +10,10 @@ function ProfileNavigator({ navigation }) {
                     elevation: 0,
                     shadowOpacity: 0,
                 },
-                headerTitleAlign: 'center'
+                headerTitleAlign: 'center',
+                cardStyle: {
+                    backgroundColor: "#FFF"
+                }
             }}>
             <Stack.Screen name="HomeProfile" component={ProfileScreen} />
         </Stack.Navigator >

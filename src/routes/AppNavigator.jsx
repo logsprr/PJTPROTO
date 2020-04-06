@@ -10,11 +10,11 @@ import DrawerNavigation from './DrawerNavigation';
 const Stack = createStackNavigator();
 export default function AppNavigator() {
     return (
-        <NavigationContainer ref={navigationRef} >
+        <NavigationContainer ref={navigationRef}>
             <Stack.Navigator
                 initialRouteName='Auth'
-                screenOptions={{ cardStyle: { backgroundColor: '#FFF' }, gestureEnabled: false, }}>
-                <Stack.Screen name="Message" component={DrawerNavigation}
+                screenOptions={{ cardStyle: { backgroundColor: '#FFF' }, gestureEnabled: false }} >
+                <Stack.Screen name="Message" component={DrawerNavigation} 
                     options={{
                         headerShown: false
                     }}
