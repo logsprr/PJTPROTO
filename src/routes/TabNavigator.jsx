@@ -12,6 +12,7 @@ const Tab = createBottomTabNavigator();
 const TabNavigator = () => {
     return (
         <Tab.Navigator
+            tabBarOptions={{ keyboardHidesTabBar: true }}
             tabBar={props => <TabBar {...props} />}
         >
             <Tab.Screen name="Mensagens" component={ChatNavigator} />

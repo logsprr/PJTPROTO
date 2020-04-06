@@ -1,5 +1,6 @@
 import './src/config/reactotron/reactotron';
 import React, { Component } from 'react';
+import { StatusBar } from 'react-native';
 import { Provider } from "react-redux";
 import { Provider as PaperProvider } from 'react-native-paper';
 import { store, persistor } from "./src/store";

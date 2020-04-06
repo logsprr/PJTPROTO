@@ -22,17 +22,16 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Component } from 'react';
 import styles from './styles';
 class DrawerContent extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            loading: ''
-        }
+
+    state = {
+        loading: ''
     }
+
     render() {
         const { login } = this.props;
-        console.log(login);
+        console.log(this.props);
         return (
-            <DrawerContentScrollView {...this.props}>
+            <DrawerContentScrollView>
                 <View
                     style={styles.drawerContent}
                 >

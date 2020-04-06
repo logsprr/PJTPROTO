@@ -63,7 +63,6 @@ class AuthNavigator extends React.Component {
     render() {
         return (
             <View>
-                <StatusBar barStyle="default" backgroundColor="white" />
                 <ActivityIndicator />
             </View>
         );

@@ -141,15 +141,13 @@ class Chat extends Component {
         const { login, navigation } = this.props;
         return (
             <View style={{ flex: 1, backgroundColor: 'white' }} >
-                <Appbar.Header style={{ backgroundColor: 'white' }} >
-                    <Appbar.Action icon="menu" onPress={() =>
+                <Appbar.Header style={{ backgroundColor: 'white', height: 80, elevation: 0, justifyContent: "space-between" }} >
+                    <Appbar.Action style={{ marginBottom: 70 }} icon="menu" onPress={() =>
                         navigation.openDrawer()
                     } />
-                    <Appbar.Content
-                        title="Mensagens"
-                    />
-                    <Appbar.Action icon="account-plus" onPress={() => navigation.navigate('Contacts')} />
+                    <Appbar.Action style={{ marginBottom: 70 }} icon="account-plus" onPress={() => navigation.navigate('Contacts')} />
                 </Appbar.Header>
+                <SearchBar lightTheme={true} showCancel round platform="ios" containerStyle={{ backgroundColor: 'white' }} placeholder="Buscar" cancelButtonTitle="cancelar" />
                 <FlatList
                     keyboardShouldPersistTaps="handled"
                     data={this.props.listChat.result.sort((a, b) => b.time - a.time)}
@@ -158,7 +156,6 @@ class Chat extends Component {
                             <Text style={{ textAlign: "center" }} >{login.result.name + ' você ainda não \npossui nenhuma conversa'}</Text>
                         </View>
                     )}
-                    ListHeaderComponent={<Story />}
                     renderItem={({ item, index }) => (
                         <ListItem
                             bottomDivider

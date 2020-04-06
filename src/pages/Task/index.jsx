@@ -18,14 +18,11 @@ class Task extends Component {
     render() {
         return (
             <>
-                <Appbar.Header>
-                    <Appbar.BackAction />
+                <Appbar.Header style={{ backgroundColor: 'white' }} >
                     <Appbar.Content
-                        title="Title"
-                        subtitle="Subtitle"
+                        titleStyle={{ alignSelf: 'center' }}
+                        title="Atividades"
                     />
-                    <Appbar.Action icon="magnify" />
-                    <Appbar.Action icon="dots-vertical" />
                 </Appbar.Header>
                 <View style={{
                     margin: 10
